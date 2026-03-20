@@ -1,0 +1,138 @@
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.backBtn { color: #888; font-size: 0.95rem; transition: color 0.2s; }
+.backBtn:hover { color: #4db8ff; }
+.pendingBadge {
+  padding: 0.4rem 1rem;
+  background: rgba(255, 184, 77, 0.12);
+  border: 1px solid rgba(255, 184, 77, 0.3);
+  border-radius: 20px;
+  color: #ffb84d;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.filters {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+.filterBtn {
+  padding: 0.4rem 0.9rem;
+  background: rgba(77, 184, 255, 0.05);
+  border: 1px solid rgba(77, 184, 255, 0.2);
+  border-radius: 20px;
+  color: #888;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.filterBtn:hover { border-color: #4db8ff; color: #4db8ff; }
+.filterBtn.active { background: rgba(77, 184, 255, 0.15); border-color: #4db8ff; color: #4db8ff; }
+
+.empty {
+  text-align: center;
+  padding: 4rem;
+  color: #888;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.card {
+  background: linear-gradient(135deg, rgba(22, 33, 62, 0.5), rgba(10, 14, 39, 0.5));
+  border: 1px solid rgba(77, 184, 255, 0.15);
+  border-left: 4px solid rgba(77, 184, 255, 0.3);
+  border-radius: 8px;
+  padding: 1.5rem;
+  transition: border-color 0.2s;
+}
+.card.pending { border-left-color: #ffb84d; }
+.card.approved { border-left-color: #4dff96; }
+.card.rejected { border-left-color: #ff6b6b; opacity: 0.7; }
+
+.cardTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.userInfo { display: flex; flex-direction: column; gap: 0.2rem; }
+.username { color: #4db8ff; font-weight: 700; }
+.userId { color: #555; font-size: 0.8rem; font-family: monospace; }
+.cardRight { display: flex; flex-direction: column; align-items: flex-end; gap: 0.3rem; }
+
+.statusBadge {
+  padding: 0.2rem 0.6rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+.statusBadge.pending { background: rgba(255,184,77,0.1); color: #ffb84d; }
+.statusBadge.approved { background: rgba(77,255,150,0.1); color: #4dff96; }
+.statusBadge.rejected { background: rgba(255,107,107,0.1); color: #ff6b6b; }
+
+.date { color: #666; font-size: 0.85rem; }
+
+.message {
+  color: #ccc;
+  line-height: 1.6;
+  margin-bottom: 0.75rem;
+  font-size: 0.95rem;
+  white-space: pre-wrap;
+}
+
+.discordLink {
+  display: inline-block;
+  color: #7ec8ff;
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+.cardActions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+.approveBtn, .rejectBtn, .deleteBtn {
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: none;
+}
+.approveBtn {
+  background: rgba(77, 255, 150, 0.1);
+  color: #4dff96;
+  border: 1px solid rgba(77, 255, 150, 0.3);
+}
+.approveBtn:hover { background: rgba(77, 255, 150, 0.2); }
+.rejectBtn {
+  background: rgba(255, 107, 107, 0.08);
+  color: #ff6b6b;
+  border: 1px solid rgba(255, 107, 107, 0.25);
+}
+.rejectBtn:hover { background: rgba(255, 107, 107, 0.18); }
+.deleteBtn {
+  background: rgba(100, 100, 100, 0.1);
+  color: #888;
+  border: 1px solid rgba(100, 100, 100, 0.2);
+}
+.deleteBtn:hover { background: rgba(100, 100, 100, 0.2); color: #aaa; }
+.approveBtn:disabled, .rejectBtn:disabled, .deleteBtn:disabled { opacity: 0.5; cursor: not-allowed; }
