@@ -32,8 +32,8 @@ export default function DebugPage() {
         </p>
 
         <p style={{ marginTop: '1rem' }}>
-          <strong>SUPABASE_SERVICE_ROLE_KEY:</strong><br/>
-          {process.env.SUPABASE_SERVICE_ROLE_KEY ? (
+          <strong>NEXT_PUBLIC_SUPABASE_SERVICE_ROLE_KEY:</strong><br/>
+          {process.env.NEXT_PUBLIC_SUPABASE_SERVICE_ROLE_KEY ? (
             <span style={{ color: '#4db8ff' }}>✅ SET (hidden for security)</span>
           ) : (
             <span style={{ color: '#ff6b6b' }}>❌ NOT SET</span>
@@ -44,8 +44,8 @@ export default function DebugPage() {
       <div style={{ marginTop: '2rem', background: '#16213e', padding: '1rem', borderRadius: '4px' }}>
         <h2>Discord Configuration:</h2>
         <p>
-          <strong>DISCORD_WEBHOOK_URL:</strong><br/>
-          {process.env.DISCORD_WEBHOOK_URL ? (
+          <strong>NEXT_PUBLIC_DISCORD_WEBHOOK_URL:</strong><br/>
+          {process.env.NEXT_PUBLIC_DISCORD_WEBHOOK_URL ? (
             <span style={{ color: '#4db8ff' }}>✅ SET</span>
           ) : (
             <span style={{ color: '#ff6b6b' }}>❌ NOT SET</span>
