@@ -1,0 +1,97 @@
+.page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 0;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.header h1 {
+  font-size: 2.5rem;
+  color: #fff;
+  margin-bottom: 0.5rem;
+}
+
+.header p {
+  color: #888;
+  font-size: 1.1rem;
+}
+
+.acronymsList {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.section {
+  background: linear-gradient(135deg, rgba(22, 33, 62, 0.8), rgba(10, 14, 39, 0.8));
+  border: 1px solid rgba(77, 184, 255, 0.2);
+  border-radius: 8px;
+  padding: 2rem;
+  transition: all 0.3s;
+}
+
+.section:hover {
+  border-color: rgba(77, 184, 255, 0.5);
+  box-shadow: 0 0 20px rgba(77, 184, 255, 0.15);
+}
+
+.section h2 {
+  color: #4db8ff;
+  font-size: 1.3rem;
+  margin: 0 0 1.5rem 0;
+  border-bottom: 2px solid rgba(77, 184, 255, 0.2);
+  padding-bottom: 0.5rem;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table tr {
+  border-bottom: 1px solid rgba(77, 184, 255, 0.1);
+}
+
+.table tr:last-child {
+  border-bottom: none;
+}
+
+.table td {
+  padding: 0.8rem 0;
+  color: #aaa;
+}
+
+.abbr {
+  font-weight: 600;
+  color: #4db8ff;
+  padding-right: 1rem;
+  width: 100px;
+  font-family: 'Courier New', monospace;
+}
+
+.full {
+  color: #aaa;
+  font-size: 0.95rem;
+}
+
+@media (max-width: 768px) {
+  .page {
+    padding: 1rem 0;
+  }
+
+  .header h1 {
+    font-size: 1.8rem;
+  }
+
+  .acronymsList {
+    grid-template-columns: 1fr;
+  }
+
+  .section {
+    padding: 1.5rem;
+  }
+}
