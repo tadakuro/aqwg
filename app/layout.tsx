@@ -1,83 +1,43 @@
-'use client';
-
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Link from 'next/link';
+import NavClient from './NavClient';
 import styles from './layout.module.css';
+
+export const metadata = {
+  title: 'AQWG - AdventureQuest Worlds Guides',
+  description:
+    'Community guides for AdventureQuest Worlds - Classes, Items, Farming, Reputations',
+};
 
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(false);
-
-  useEffect(() => {
-    // Check if user is authenticated as admin
-    const sessionId = sessionStorage.getItem('admin_session');
-    setIsAdmin(!!sessionId);
-  }, []);
-
   return (
     <html lang="en">
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>AQWG - AdventureQuest Worlds Guides</title>
-        <meta
-          name="description"
-          content="Community guides for AdventureQuest Worlds - Classes, Items, Farming, Reputations"
-        />
         <style>{`
-          * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-          }
-          
+          * { margin: 0; padding: 0; box-sizing: border-box; }
           html, body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #0a0e27 0%, #16213e 100%);
             color: #e0e0e0;
             line-height: 1.6;
           }
-          
-          a {
-            color: #4db8ff;
-            text-decoration: none;
-            transition: color 0.2s;
-          }
-          
-          a:hover {
-            color: #7ec8ff;
-          }
+          a { color: #4db8ff; text-decoration: none; transition: color 0.2s; }
+          a:hover { color: #7ec8ff; }
         `}</style>
       </head>
       <body>
         <div className={styles.layout}>
-          <header className={styles.header}>
-            <div className={styles.headerContent}>
-              <Link href="/" className={styles.logo}>
-                AQWG
-              </Link>
-              <button
-                className={styles.mobileMenuBtn}
-                onClick={() => setSidebarOpen(!sidebarOpen)}
-                aria-label="Toggle menu"
-              >
-                ☰
-              </button>
-              <nav className={styles.headerNav}>
-                <Link href="/">Home</Link>
-                <Link href="/guides">Guides</Link>
-                <Link href="/announcements">Announcements</Link>
-                <Link href="/updates">Site Updates</Link>
-              </nav>
-            </div>
-          </header>
+          {/* NavClient is a 'use client' component that owns the mobile-menu toggle */}
+          <NavClient />
 
           <div className={styles.container}>
-            <aside className={`${styles.sidebar} ${sidebarOpen ? styles.open : ''}`}>
+            <aside className={styles.sidebar} id="sidebar">
               <nav className={styles.sidebarNav}>
                 <h3>Categories</h3>
                 <Link href="/guides?category=class">Classes</Link>
@@ -85,33 +45,31 @@ export default function RootLayout({
                 <Link href="/guides?category=reputation">Reputation</Link>
                 <Link href="/guides?category=farming">Farming</Link>
                 <Link href="/guides?category=enhancement">Enhancements</Link>
-                
+
                 <hr />
-                
+
                 <h3>Resources</h3>
                 <Link href="/new-player">New Player Guide</Link>
                 <Link href="/farming-list">Farming List</Link>
                 <Link href="/acronyms">Acronyms</Link>
-                
-                {isAdmin && (
-                  <>
-                    <hr />
-                    <h3>Admin</h3>
-                    <Link href="/admin">Dashboard</Link>
-                  </>
-                )}
+
+                <hr />
+
+                <h3>Admin</h3>
+                <Link href="/admin">Dashboard</Link>
               </nav>
             </aside>
 
-            <main className={styles.main}>
-              {children}
-            </main>
+            <main className={styles.main}>{children}</main>
           </div>
 
           <footer className={styles.footer}>
             <p>AQWG - Community Guides for AdventureQuest Worlds</p>
             <p>
-              <Link href="https://discord.gg/your-server" target="_blank">
+              <Link
+                href={process.env.NEXT_PUBLIC_DISCORD_INVITE ?? '#'}
+                target="_blank"
+              >
                 Join Discord
               </Link>
             </p>
