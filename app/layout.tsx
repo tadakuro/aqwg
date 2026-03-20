@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import styles from './layout.module.css';
 
@@ -10,6 +10,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  useEffect(() => {
+    // Check if user is authenticated as admin
+    const sessionId = sessionStorage.getItem('admin_session');
+    setIsAdmin(!!sessionId);
+  }, []);
 
   return (
     <html lang="en">
@@ -86,10 +93,13 @@ export default function RootLayout({
                 <Link href="/farming-list">Farming List</Link>
                 <Link href="/acronyms">Acronyms</Link>
                 
-                <hr />
-                
-                <h3>Admin</h3>
-                <Link href="/admin">Dashboard</Link>
+                {isAdmin && (
+                  <>
+                    <hr />
+                    <h3>Admin</h3>
+                    <Link href="/admin">Dashboard</Link>
+                  </>
+                )}
               </nav>
             </aside>
 
