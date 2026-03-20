@@ -1,0 +1,156 @@
+.guidesPage {
+  padding: 2rem 0;
+}
+
+.header {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.header h1 {
+  font-size: 2.5rem;
+  color: #fff;
+  margin-bottom: 0.5rem;
+}
+
+.header p {
+  color: #888;
+  font-size: 1.1rem;
+}
+
+.filters {
+  margin-bottom: 2rem;
+}
+
+.categoryFilter {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.filterBtn {
+  padding: 0.7rem 1.5rem;
+  background: transparent;
+  color: #4db8ff;
+  border: 2px solid #4db8ff;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.filterBtn:hover {
+  background: rgba(77, 184, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+.filterBtn.active {
+  background: linear-gradient(135deg, #4db8ff, #3d97d6);
+  color: #0a0e27;
+  border-color: #7ec8ff;
+}
+
+.loading,
+.empty {
+  text-align: center;
+  padding: 3rem;
+  color: #888;
+  font-size: 1.1rem;
+}
+
+.empty a {
+  display: inline-block;
+  margin-top: 1rem;
+  color: #4db8ff;
+  font-weight: 600;
+}
+
+.guidesList {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.guideCard {
+  background: linear-gradient(135deg, rgba(22, 33, 62, 0.8), rgba(10, 14, 39, 0.8));
+  border: 1px solid rgba(77, 184, 255, 0.2);
+  border-radius: 8px;
+  padding: 2rem;
+  transition: all 0.3s;
+  display: flex;
+  flex-direction: column;
+}
+
+.guideCard:hover {
+  border-color: rgba(77, 184, 255, 0.5);
+  box-shadow: 0 0 20px rgba(77, 184, 255, 0.15);
+  transform: translateY(-4px);
+}
+
+.guideHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.guideCard h3 {
+  color: #fff;
+  font-size: 1.3rem;
+  margin: 0;
+  flex: 1;
+}
+
+.category {
+  background: rgba(77, 184, 255, 0.1);
+  color: #4db8ff;
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+.description {
+  color: #aaa;
+  margin: 0 0 1.5rem 0;
+  flex: 1;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.readMore {
+  color: #4db8ff;
+  font-weight: 600;
+  transition: all 0.2s;
+  display: inline-block;
+}
+
+.readMore:hover {
+  color: #7ec8ff;
+  margin-right: -3px;
+}
+
+@media (max-width: 768px) {
+  .header h1 {
+    font-size: 1.8rem;
+  }
+
+  .categoryFilter {
+    gap: 0.5rem;
+  }
+
+  .filterBtn {
+    padding: 0.6rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .guidesList {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
