@@ -9,7 +9,7 @@ let supabaseClient: any = null;
 if (supabaseUrl && supabaseAnonKey) {
   supabaseClient = createClient(supabaseUrl, supabaseAnonKey);
 } else {
-  // Dummy client that won't crash
+  // Dummy client that won't crash but will fail gracefully
   supabaseClient = {
     from: () => ({
       select: () => Promise.resolve({ data: null, error: { message: 'Supabase not configured' } }),
@@ -20,9 +20,11 @@ if (supabaseUrl && supabaseAnonKey) {
   };
 }
 
+// Export both - use same client for all operations
 export const supabase = supabaseClient;
 export const supabaseAdmin = supabaseClient;
 
+// Types for database tables
 export interface Guide {
   id: string;
   title: string;
@@ -42,7 +44,7 @@ export interface Section {
   title: string;
   content: string;
   order: number;
-  data?: Record<string, any>;
+  data?: Record<string, any>; // For structured data like requirements
 }
 
 export interface Announcement {
@@ -59,7 +61,7 @@ export interface SiteUpdate {
   id: string;
   version: string;
   title: string;
-  changes: string[];
+  changes: string[]; // Array of change descriptions
   created_at: string;
 }
 
