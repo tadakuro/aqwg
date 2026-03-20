@@ -1,16 +1,28 @@
 import { createClient } from '@supabase/supabase-js';
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
-// Client for public operations
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+let supabaseClient: any = null;
 
-// Client for server-side operations (with service role key)
-export const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey);
+// Only create client if both URL and key are available
+if (supabaseUrl && supabaseAnonKey) {
+  supabaseClient = createClient(supabaseUrl, supabaseAnonKey);
+} else {
+  // Dummy client that won't crash
+  supabaseClient = {
+    from: () => ({
+      select: () => Promise.resolve({ data: null, error: { message: 'Supabase not configured' } }),
+      insert: () => Promise.resolve({ data: null, error: { message: 'Supabase not configured' } }),
+      update: () => Promise.resolve({ data: null, error: { message: 'Supabase not configured' } }),
+      delete: () => Promise.resolve({ data: null, error: { message: 'Supabase not configured' } }),
+    })
+  };
+}
 
-// Types for database tables
+export const supabase = supabaseClient;
+export const supabaseAdmin = supabaseClient;
+
 export interface Guide {
   id: string;
   title: string;
@@ -30,7 +42,7 @@ export interface Section {
   title: string;
   content: string;
   order: number;
-  data?: Record<string, any>; // For structured data like requirements
+  data?: Record<string, any>;
 }
 
 export interface Announcement {
@@ -47,7 +59,7 @@ export interface SiteUpdate {
   id: string;
   version: string;
   title: string;
-  changes: string[]; // Array of change descriptions
+  changes: string[];
   created_at: string;
 }
 
