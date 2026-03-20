@@ -1,0 +1,44 @@
+Contact: security@yourdomain.com
+Expires: 2026-12-20T00:00:00.000Z
+Preferred-Languages: en
+Canonical: https://aqwg.vercel.app/.well-known/security.txt
+
+# AQWG Security Policy
+
+This is a community-run guide website for AdventureQuest Worlds players.
+
+## Reporting Security Issues
+
+If you discover a security vulnerability, please email security@yourdomain.com 
+instead of using the public issue tracker.
+
+Include:
+- Description of the vulnerability
+- Steps to reproduce
+- Impact assessment
+- Your suggested fix (optional)
+
+Please allow 7-14 days for a response.
+
+## What We Do
+
+- We maintain user feedback on guides
+- We manage game announcements
+- We host community guides and resources
+
+## What We Don't Do
+
+- We are NOT affiliated with Artix Entertainment or AdventureQuest
+- We do NOT store payment information
+- We do NOT manage game accounts
+- We do NOT have access to game servers
+
+## Responsible Disclosure
+
+We appreciate responsible disclosure and will:
+- Acknowledge receipt within 48 hours
+- Provide regular updates
+- Credit the finder (if desired)
+- Work together to fix issues
+
+Thank you for helping keep AQWG safe!
