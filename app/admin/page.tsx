@@ -203,10 +203,10 @@ export default function AdminDashboard() {
               <Link href="/admin/guides/new" className={styles.actionBtn}>
                 Create New Guide
               </Link>
-              <Link href="/admin/announcements/new" className={styles.actionBtn}>
+              <Link href="/admin/announcements" className={styles.actionBtn}>
                 Post Announcement
               </Link>
-              <Link href="/admin/updates/new" className={styles.actionBtn}>
+              <Link href="/admin/updates" className={styles.actionBtn}>
                 Log Site Update
               </Link>
               <Link href="/admin/submissions" className={styles.actionBtn}>
