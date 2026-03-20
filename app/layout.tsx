@@ -53,10 +53,7 @@ export default function RootLayout({
                 <Link href="/farming-list">Farming List</Link>
                 <Link href="/acronyms">Acronyms</Link>
 
-                <hr />
 
-                <h3>Admin</h3>
-                <Link href="/admin">Dashboard</Link>
               </nav>
             </aside>
 
@@ -69,12 +66,19 @@ export default function RootLayout({
               <Link
                 href={process.env.NEXT_PUBLIC_DISCORD_INVITE ?? '#'}
                 target="_blank"
+                rel="noopener noreferrer"
               >
                 Join Discord
               </Link>
             </p>
             <p style={{ fontSize: '0.9em', marginTop: '1rem', opacity: 0.7 }}>
               This is a community resource. Not affiliated with Artix Entertainment.
+            </p>
+            <p style={{ fontSize: '0.9em', marginTop: '0.5rem', opacity: 0.7 }}>
+              Made by{' '}
+              <Link href="https://discord.com/users/446632814495137792" target="_blank" rel="noopener noreferrer">
+                Bonebanks
+              </Link>
             </p>
           </footer>
         </div>
