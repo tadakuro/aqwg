@@ -1,0 +1,180 @@
+.admin {
+  padding: 2rem 0;
+}
+
+.header {
+  margin-bottom: 3rem;
+  text-align: center;
+}
+
+.header h1 {
+  font-size: 2.5rem;
+  color: #fff;
+  margin-bottom: 0.5rem;
+}
+
+.header p {
+  color: #4db8ff;
+  font-size: 1.1rem;
+}
+
+.authPage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 70vh;
+  padding: 2rem;
+}
+
+.authBox {
+  background: linear-gradient(135deg, rgba(22, 33, 62, 0.8), rgba(10, 14, 39, 0.8));
+  border: 1px solid rgba(77, 184, 255, 0.2);
+  border-radius: 12px;
+  padding: 3rem;
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+}
+
+.authBox h1 {
+  color: #4db8ff;
+  margin-bottom: 0.5rem;
+}
+
+.authBox p {
+  color: #aaa;
+  margin-bottom: 2rem;
+}
+
+.discordBtn {
+  width: 100%;
+  padding: 1rem;
+  background: #5865f2;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.discordBtn:hover {
+  background: #4752c4;
+  transform: translateY(-2px);
+}
+
+.loading {
+  text-align: center;
+  color: #888;
+  padding: 3rem;
+  font-size: 1.1rem;
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+}
+
+.statCard {
+  background: linear-gradient(135deg, rgba(22, 33, 62, 0.8), rgba(10, 14, 39, 0.8));
+  border: 1px solid rgba(77, 184, 255, 0.2);
+  border-radius: 8px;
+  padding: 2rem;
+  text-align: center;
+  transition: all 0.3s;
+}
+
+.statCard:hover {
+  border-color: rgba(77, 184, 255, 0.5);
+  box-shadow: 0 0 20px rgba(77, 184, 255, 0.15);
+  transform: translateY(-4px);
+}
+
+.statCard h3 {
+  color: #4db8ff;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 1rem;
+}
+
+.statNumber {
+  font-size: 2.5rem;
+  font-weight: 900;
+  color: #fff;
+  margin-bottom: 1rem;
+}
+
+.statCard a {
+  display: inline-block;
+  padding: 0.7rem 1.5rem;
+  background: rgba(77, 184, 255, 0.1);
+  border: 1px solid #4db8ff;
+  border-radius: 4px;
+  color: #4db8ff;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+.statCard a:hover {
+  background: #4db8ff;
+  color: #0a0e27;
+}
+
+.quickActions,
+.recentActivity {
+  margin-bottom: 3rem;
+}
+
+.quickActions h2,
+.recentActivity h2 {
+  font-size: 1.5rem;
+  color: #fff;
+  margin-bottom: 1.5rem;
+}
+
+.actions {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.actionBtn {
+  padding: 1.5rem;
+  background: linear-gradient(135deg, #4db8ff, #3d97d6);
+  color: #0a0e27;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: block;
+  text-align: center;
+}
+
+.actionBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 30px rgba(77, 184, 255, 0.3);
+}
+
+@media (max-width: 768px) {
+  .header h1 {
+    font-size: 1.8rem;
+  }
+
+  .authBox {
+    padding: 2rem;
+  }
+
+  .statsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .actions {
+    grid-template-columns: 1fr;
+  }
+}
