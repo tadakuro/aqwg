@@ -9,14 +9,17 @@ interface Section {
   title: string;
   content: string;
   order: number;
+  // Each preview section tracks its own selected file
+  previewFile?: File | null;
 }
 
 export default function GuideEditor() {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [category, setCategory] = useState<'class' | 'item' | 'reputation' | 'farming' | 'enhancement'>('class');
+  const [category, setCategory] = useState<
+    'class' | 'item' | 'reputation' | 'farming' | 'enhancement'
+  >('class');
   const [sections, setSections] = useState<Section[]>([]);
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
   const addSection = (type: Section['type']) => {
     const newSection: Section = {
@@ -199,11 +202,22 @@ export default function GuideEditor() {
                       <input
                         type="file"
                         accept="image/*"
-                        onChange={(e) => setSelectedFile(e.target.files?.[0] || null)}
+                        onChange={(e) =>
+                          updateSection(section.id, {
+                            previewFile: e.target.files?.[0] ?? null,
+                          })
+                        }
                       />
-                      <p style={{ fontSize: '0.9em', color: '#888', marginTop: '0.5rem' }}>
-                        Upload class/item preview image
-                      </p>
+                      {section.previewFile && (
+                        <p style={{ fontSize: '0.9em', color: '#4db8ff', marginTop: '0.5rem' }}>
+                          Selected: {section.previewFile.name}
+                        </p>
+                      )}
+                      {!section.previewFile && (
+                        <p style={{ fontSize: '0.9em', color: '#888', marginTop: '0.5rem' }}>
+                          Upload class/item preview image
+                        </p>
+                      )}
                     </div>
                   ) : (
                     <textarea
