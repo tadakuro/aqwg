@@ -14,6 +14,8 @@ export default function AdminDashboard() {
   });
   const [loading, setLoading] = useState(true);
   const [authenticated, setAuthenticated] = useState(false);
+  const [password, setPassword] = useState('');
+  const [loginError, setLoginError] = useState('');
 
   useEffect(() => {
     checkAuth();
@@ -23,23 +25,29 @@ export default function AdminDashboard() {
   }, []);
 
   const checkAuth = async () => {
-    // Check for admin_pass param
     const params = new URLSearchParams(typeof window !== 'undefined' ? window.location.search : '');
     const adminPass = params.get('admin_pass');
     
-    // Simple password check (temporary - should use real auth later)
-    if (adminPass === 'testamen123.') {
+    if (adminPass === 'aqwgpub!11!') {
       sessionStorage.setItem('admin_session', 'true');
       setAuthenticated(true);
       return;
     }
     
-    // Check if already authenticated in session
     const sessionId = sessionStorage.getItem('admin_session');
     if (sessionId) {
       setAuthenticated(true);
     } else {
       setAuthenticated(false);
+    }
+  };
+
+  const handleLogin = () => {
+    if (password === 'aqwgpub!11!') {
+      sessionStorage.setItem('admin_session', 'true');
+      setAuthenticated(true);
+    } else {
+      setLoginError('Invalid password');
     }
   };
 
@@ -113,18 +121,6 @@ export default function AdminDashboard() {
   };
 
   if (!authenticated) {
-    const [password, setPassword] = useState('');
-    const [error, setError] = useState('');
-
-    const handleLogin = () => {
-      if (password === 'testamen123.') {
-        sessionStorage.setItem('admin_session', 'true');
-        setAuthenticated(true);
-      } else {
-        setError('Invalid password');
-      }
-    };
-
     return (
       <div className={styles.authPage}>
         <div className={styles.authBox}>
@@ -144,6 +140,7 @@ export default function AdminDashboard() {
               border: '1px solid #4db8ff',
               background: '#16213e',
               color: '#e0e0e0',
+              boxSizing: 'border-box',
             }}
           />
           <button
@@ -153,9 +150,9 @@ export default function AdminDashboard() {
           >
             Login
           </button>
-          {error && (
+          {loginError && (
             <p style={{ marginTop: '1rem', color: '#ff6b6b' }}>
-              ❌ {error}
+              ❌ {loginError}
             </p>
           )}
           <p style={{ marginTop: '1rem', fontSize: '0.9em', color: '#888' }}>
