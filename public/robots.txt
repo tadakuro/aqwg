@@ -22,7 +22,7 @@ Disallow: /*?*
 Crawl-delay: 1
 
 # Sitemaps
-Sitemap: https://yourdomain.com/sitemap.xml
+Sitemap: https://aqwg.vercel.app/sitemap.xml
 
 # Comment: This robots.txt allows search engines to crawl public pages
 # but prevents indexing of admin area, API routes, and dynamic parameters
