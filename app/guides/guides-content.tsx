@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import styles from './guides.module.css';
 
 interface Guide {
@@ -14,28 +14,41 @@ interface Guide {
 }
 
 export default function GuidesContent() {
+  const router = useRouter();
   const searchParams = useSearchParams();
-  const category = searchParams.get('category');
-  
+
+  // Derive category directly from the URL — no separate state.
+  // Sidebar links and filter buttons stay in sync automatically.
+  const selectedCategory = searchParams.get('category') || 'all';
+
   const [guides, setGuides] = useState<Guide[]>([]);
   const [loading, setLoading] = useState(true);
-  const [selectedCategory, setSelectedCategory] = useState(category || 'all');
 
   useEffect(() => {
+    const loadGuides = async () => {
+      setLoading(true);
+      try {
+        const params =
+          selectedCategory === 'all' ? '' : `?category=${selectedCategory}`;
+        const response = await fetch(`/api/guides${params}`);
+        const data = await response.json();
+        setGuides(data.data || []);
+      } catch (error) {
+        console.error('Failed to load guides:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
     loadGuides();
   }, [selectedCategory]);
 
-  const loadGuides = async () => {
-    setLoading(true);
-    try {
-      const params = selectedCategory === 'all' ? '' : `?category=${selectedCategory}`;
-      const response = await fetch(`/api/guides${params}`);
-      const data = await response.json();
-      setGuides(data.data || []);
-    } catch (error) {
-      console.error('Failed to load guides:', error);
-    } finally {
-      setLoading(false);
+  // Push a new URL so the address bar updates and the back button works.
+  const handleCategoryChange = (value: string) => {
+    if (value === 'all') {
+      router.push('/guides');
+    } else {
+      router.push(`/guides?category=${value}`);
     }
   };
 
@@ -58,7 +71,7 @@ export default function GuidesContent() {
               className={`${styles.filterBtn} ${
                 selectedCategory === cat.value ? styles.active : ''
               }`}
-              onClick={() => setSelectedCategory(cat.value)}
+              onClick={() => handleCategoryChange(cat.value)}
             >
               {cat.label}
             </button>
