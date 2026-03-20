@@ -17,22 +17,24 @@ export default function AdminDashboard() {
 
   useEffect(() => {
     checkAuth();
-    // Don't load stats on initial mount to avoid supabase errors
     setTimeout(() => {
       loadStats();
     }, 500);
   }, []);
 
   const checkAuth = async () => {
-    // Temporary bypass for setup - check for admin_pass param
+    // Check for admin_pass param
     const params = new URLSearchParams(typeof window !== 'undefined' ? window.location.search : '');
-    if (params.get('admin_pass') === 'setup') {
+    const adminPass = params.get('admin_pass');
+    
+    // Simple password check (temporary - should use real auth later)
+    if (adminPass === 'testamen123.') {
       sessionStorage.setItem('admin_session', 'true');
       setAuthenticated(true);
       return;
     }
     
-    // In a real app, verify the user is logged in as admin
+    // Check if already authenticated in session
     const sessionId = sessionStorage.getItem('admin_session');
     if (sessionId) {
       setAuthenticated(true);
@@ -43,7 +45,6 @@ export default function AdminDashboard() {
 
   const loadStats = async () => {
     try {
-      // Default stats - don't crash if database unavailable
       setStats({
         guides: 0,
         announcements: 0,
@@ -51,7 +52,6 @@ export default function AdminDashboard() {
         feedback: 0,
       });
       
-      // Try to fetch stats but don't fail if it doesn't work
       let guidesCount = 0;
       let announcementsCount = 0;
       let submissionsCount = 0;
@@ -113,14 +113,51 @@ export default function AdminDashboard() {
   };
 
   if (!authenticated) {
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
+
+    const handleLogin = () => {
+      if (password === 'testamen123.') {
+        sessionStorage.setItem('admin_session', 'true');
+        setAuthenticated(true);
+      } else {
+        setError('Invalid password');
+      }
+    };
+
     return (
       <div className={styles.authPage}>
         <div className={styles.authBox}>
           <h1>Admin Login</h1>
-          <p>Use your Discord account to log in</p>
-          <button className={styles.discordBtn}>
-            Login with Discord
+          <p>Enter admin password</p>
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            onKeyPress={(e) => e.key === 'Enter' && handleLogin()}
+            style={{
+              width: '100%',
+              padding: '0.75rem',
+              marginBottom: '1rem',
+              borderRadius: '4px',
+              border: '1px solid #4db8ff',
+              background: '#16213e',
+              color: '#e0e0e0',
+            }}
+          />
+          <button
+            onClick={handleLogin}
+            className={styles.discordBtn}
+            style={{ width: '100%' }}
+          >
+            Login
           </button>
+          {error && (
+            <p style={{ marginTop: '1rem', color: '#ff6b6b' }}>
+              ❌ {error}
+            </p>
+          )}
           <p style={{ marginTop: '1rem', fontSize: '0.9em', color: '#888' }}>
             Only registered admins can access this area
           </p>
@@ -167,16 +204,16 @@ export default function AdminDashboard() {
             <h2>Quick Actions</h2>
             <div className={styles.actions}>
               <Link href="/admin/guides/new" className={styles.actionBtn}>
-                ➕ Create New Guide
+                Create New Guide
               </Link>
               <Link href="/admin/announcements/new" className={styles.actionBtn}>
-                📢 Post Announcement
+                Post Announcement
               </Link>
               <Link href="/admin/updates/new" className={styles.actionBtn}>
-                📝 Log Site Update
+                Log Site Update
               </Link>
               <Link href="/admin/submissions" className={styles.actionBtn}>
-                ✅ Review Submissions
+                Review Submissions
               </Link>
             </div>
           </section>
