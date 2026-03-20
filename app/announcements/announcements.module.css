@@ -1,0 +1,130 @@
+.announcementsPage {
+  padding: 2rem 0;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.header {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.header h1 {
+  font-size: 2.5rem;
+  color: #fff;
+  margin-bottom: 0.5rem;
+}
+
+.header p {
+  color: #888;
+  font-size: 1.1rem;
+}
+
+.loading,
+.empty {
+  text-align: center;
+  padding: 3rem;
+  color: #888;
+  font-size: 1.1rem;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.announcement {
+  background: linear-gradient(135deg, rgba(22, 33, 62, 0.8), rgba(10, 14, 39, 0.8));
+  border: 1px solid rgba(77, 184, 255, 0.2);
+  border-left: 4px solid #4db8ff;
+  border-radius: 8px;
+  padding: 2rem;
+  transition: all 0.3s;
+}
+
+.announcement:hover {
+  border-color: rgba(77, 184, 255, 0.5);
+  box-shadow: 0 0 20px rgba(77, 184, 255, 0.15);
+}
+
+.meta {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.type {
+  background: rgba(77, 184, 255, 0.1);
+  color: #4db8ff;
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.type.game_update {
+  background: rgba(76, 209, 55, 0.1);
+  color: #4cd137;
+}
+
+.type.event {
+  background: rgba(255, 152, 0, 0.1);
+  color: #ff9800;
+}
+
+.type.maintenance {
+  background: rgba(244, 67, 54, 0.1);
+  color: #f44336;
+}
+
+.date {
+  color: #888;
+  font-size: 0.9rem;
+  margin-left: auto;
+}
+
+.announcement h2 {
+  color: #fff;
+  font-size: 1.5rem;
+  margin: 0 0 1rem 0;
+}
+
+.content {
+  color: #aaa;
+  line-height: 1.8;
+  margin: 0;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+@media (max-width: 768px) {
+  .announcementsPage {
+    padding: 1rem 0;
+  }
+
+  .header h1 {
+    font-size: 1.8rem;
+  }
+
+  .announcement {
+    padding: 1.5rem;
+  }
+
+  .announcement h2 {
+    font-size: 1.2rem;
+  }
+
+  .meta {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .date {
+    margin-left: 0;
+  }
+}
