@@ -40,43 +40,64 @@ export default function AdminDashboard() {
 
   const loadStats = async () => {
     try {
-      // Fetch stats from Supabase with error handling
-      const { count: guidesCount, error: guidesError } = await supabase
-        .from('guides')
-        .select('id', { count: 'exact', head: true });
-      
-      const { count: announcementsCount, error: announcementsError } = await supabase
-        .from('announcements')
-        .select('id', { count: 'exact', head: true });
-      
-      const { count: submissionsCount, error: submissionsError } = await supabase
-        .from('discord_submissions')
-        .select('id', { count: 'exact', head: true });
-      
-      const { count: feedbackCount, error: feedbackError } = await supabase
-        .from('user_feedback')
-        .select('id', { count: 'exact', head: true });
+      // Fetch stats from Supabase with comprehensive error handling
+      let guidesCount = 0;
+      let announcementsCount = 0;
+      let submissionsCount = 0;
+      let feedbackCount = 0;
 
-      if (guidesError) console.warn('Guides count error:', guidesError);
-      if (announcementsError) console.warn('Announcements count error:', announcementsError);
-      if (submissionsError) console.warn('Submissions count error:', submissionsError);
-      if (feedbackError) console.warn('Feedback count error:', feedbackError);
+      try {
+        const result = await supabase
+          .from('guides')
+          .select('id', { count: 'exact', head: true });
+        if (result.data !== null) {
+          guidesCount = result.count || 0;
+        }
+      } catch (e) {
+        console.warn('Could not fetch guides count');
+      }
+
+      try {
+        const result = await supabase
+          .from('announcements')
+          .select('id', { count: 'exact', head: true });
+        if (result.data !== null) {
+          announcementsCount = result.count || 0;
+        }
+      } catch (e) {
+        console.warn('Could not fetch announcements count');
+      }
+
+      try {
+        const result = await supabase
+          .from('discord_submissions')
+          .select('id', { count: 'exact', head: true });
+        if (result.data !== null) {
+          submissionsCount = result.count || 0;
+        }
+      } catch (e) {
+        console.warn('Could not fetch submissions count');
+      }
+
+      try {
+        const result = await supabase
+          .from('user_feedback')
+          .select('id', { count: 'exact', head: true });
+        if (result.data !== null) {
+          feedbackCount = result.count || 0;
+        }
+      } catch (e) {
+        console.warn('Could not fetch feedback count');
+      }
 
       setStats({
-        guides: guidesCount || 0,
-        announcements: announcementsCount || 0,
-        submissions: submissionsCount || 0,
-        feedback: feedbackCount || 0,
+        guides: guidesCount,
+        announcements: announcementsCount,
+        submissions: submissionsCount,
+        feedback: feedbackCount,
       });
     } catch (error) {
       console.error('Error loading stats:', error);
-      // Don't crash if stats fail to load
-      setStats({
-        guides: 0,
-        announcements: 0,
-        submissions: 0,
-        feedback: 0,
-      });
     } finally {
       setLoading(false);
     }
