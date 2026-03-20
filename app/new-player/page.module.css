@@ -108,3 +108,14 @@
     padding: 1.5rem;
   }
 }
+
+.cardBody ul,
+.cardBody ol {
+  color: #aaa;
+  padding-left: 1.5rem;
+  line-height: 1.8;
+}
+.cardBody li { margin-bottom: 0.5rem; }
+.cardBody p { color: #aaa; line-height: 1.6; margin-bottom: 0.5rem; }
+.cardBody strong { color: #e0e0e0; }
+.cardBody a { color: #4db8ff; font-weight: 600; }
