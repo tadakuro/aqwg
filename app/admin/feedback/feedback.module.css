@@ -1,0 +1,110 @@
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.backBtn { color: #888; font-size: 0.95rem; transition: color 0.2s; }
+.backBtn:hover { color: #4db8ff; }
+
+.summary {
+  display: flex;
+  gap: 1.5rem;
+  font-size: 0.95rem;
+  color: #aaa;
+}
+.summary span { color: #4db8ff; font-weight: 600; }
+
+.filters {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+.filterBtn {
+  padding: 0.4rem 0.9rem;
+  background: rgba(77, 184, 255, 0.05);
+  border: 1px solid rgba(77, 184, 255, 0.2);
+  border-radius: 20px;
+  color: #888;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.filterBtn:hover { border-color: #4db8ff; color: #4db8ff; }
+.filterBtn.active {
+  background: rgba(77, 184, 255, 0.15);
+  border-color: #4db8ff;
+  color: #4db8ff;
+}
+
+.empty {
+  text-align: center;
+  padding: 4rem;
+  color: #888;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.card {
+  background: linear-gradient(135deg, rgba(22, 33, 62, 0.5), rgba(10, 14, 39, 0.5));
+  border: 1px solid rgba(77, 184, 255, 0.15);
+  border-radius: 8px;
+  padding: 1.5rem;
+  transition: border-color 0.2s;
+}
+.card:hover { border-color: rgba(77, 184, 255, 0.3); }
+
+.cardTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.75rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.stars { font-size: 1rem; margin-right: 0.5rem; }
+.username { color: #4db8ff; font-weight: 600; }
+.email { color: #666; font-size: 0.85rem; margin-left: 0.5rem; }
+.date { color: #666; font-size: 0.85rem; }
+
+.guideRef {
+  font-size: 0.85rem;
+  color: #888;
+  margin-bottom: 0.75rem;
+}
+.guideRef a { color: #7ec8ff; }
+
+.comment {
+  color: #ccc;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+}
+
+.cardActions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.helpful { color: #666; font-size: 0.85rem; }
+.deleteBtn {
+  padding: 0.4rem 0.9rem;
+  background: rgba(255, 107, 107, 0.08);
+  color: #ff6b6b;
+  border: 1px solid rgba(255, 107, 107, 0.25);
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.deleteBtn:hover { background: rgba(255, 107, 107, 0.18); }
+.deleteBtn:disabled { opacity: 0.5; cursor: not-allowed; }
