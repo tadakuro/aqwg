@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import RichEditor from '@/app/components/RichEditor';
 import styles from '../../admin.module.css';
 import pageStyles from './page.module.css';
 
@@ -9,7 +10,7 @@ interface Card {
   id: string;
   title: string;
   content: string;
-  order: number;
+  sort_order: number;
 }
 
 export default function AdminNewPlayerPage() {
@@ -24,6 +25,16 @@ export default function AdminNewPlayerPage() {
   const [formTitle, setFormTitle] = useState('');
   const [formContent, setFormContent] = useState('');
   const [formOrder, setFormOrder] = useState(0);
+
+  const [expandedCards, setExpandedCards] = useState<Set<string>>(new Set());
+
+  const toggleExpanded = (id: string) => {
+    setExpandedCards((prev) => {
+      const next = new Set(prev);
+      next.has(id) ? next.delete(id) : next.add(id);
+      return next;
+    });
+  };
 
   useEffect(() => { loadCards(); }, []);
 
@@ -48,7 +59,7 @@ export default function AdminNewPlayerPage() {
     setEditingCard(card);
     setFormTitle(card.title);
     setFormContent(card.content);
-    setFormOrder(card.order);
+    setFormOrder(card.sort_order);
     setError('');
     setShowForm(true);
   };
@@ -114,8 +125,13 @@ export default function AdminNewPlayerPage() {
             <input value={formTitle} onChange={(e) => setFormTitle(e.target.value)} placeholder="e.g., Game Basics" />
           </div>
           <div className={pageStyles.field}>
-            <label>Content * <span className={pageStyles.hint}>(HTML supported: &lt;ul&gt;, &lt;ol&gt;, &lt;li&gt;, &lt;strong&gt;, &lt;a&gt;)</span></label>
-            <textarea value={formContent} onChange={(e) => setFormContent(e.target.value)} rows={8} placeholder="<ul><li>Item one</li><li>Item two</li></ul>" />
+            <label>Content *</label>
+            <RichEditor
+              value={formContent}
+              onChange={setFormContent}
+              placeholder="Write the card content here..."
+              minHeight={200}
+            />
           </div>
           <div className={pageStyles.field}>
             <label>Order</label>
@@ -137,14 +153,23 @@ export default function AdminNewPlayerPage() {
           {cards.map((card) => (
             <div key={card.id} className={pageStyles.card}>
               <div className={pageStyles.cardTop}>
-                <span className={pageStyles.order}>#{card.order}</span>
+                <span className={pageStyles.order}>#{card.sort_order}</span>
                 <h3>{card.title}</h3>
                 <div className={pageStyles.actions}>
                   <button onClick={() => openEdit(card)} className={pageStyles.editBtn}>✏️ Edit</button>
                   <button onClick={() => handleDelete(card.id)} disabled={deletingId === card.id} className={pageStyles.deleteBtn}>🗑 Delete</button>
                 </div>
               </div>
-              <div className={pageStyles.preview} dangerouslySetInnerHTML={{ __html: card.content }} />
+              <div
+                className={`${pageStyles.preview} ${expandedCards.has(card.id) ? pageStyles.expanded : ''}`}
+                dangerouslySetInnerHTML={{ __html: card.content }}
+              />
+              <button
+                className={pageStyles.readMoreBtn}
+                onClick={() => toggleExpanded(card.id)}
+              >
+                {expandedCards.has(card.id) ? '▲ Show Less' : '▼ Read More'}
+              </button>
             </div>
           ))}
         </div>
