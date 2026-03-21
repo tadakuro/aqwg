@@ -109,6 +109,41 @@
   }
 }
 
+.cardBody {
+  position: relative;
+  transition: max-height 0.3s ease;
+  overflow: hidden;
+}
+
+.cardBodyCollapsed {
+  max-height: 120px;
+}
+
+.cardBodyCollapsed::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 48px;
+  background: linear-gradient(transparent, rgba(10, 14, 39, 0.95));
+  pointer-events: none;
+}
+
+.readMoreBtn {
+  background: none;
+  border: none;
+  color: #4db8ff;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0.4rem 0;
+  margin-top: 0.5rem;
+  display: block;
+  transition: color 0.2s;
+}
+.readMoreBtn:hover { color: #7ec8ff; }
+
 .cardBody ul,
 .cardBody ol {
   color: #aaa;
