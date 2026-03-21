@@ -1,13 +1,59 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import styles from './page.module.css';
 
 interface Card {
   id: string;
   title: string;
   content: string;
-  order: number;
+  sort_order: number;
+}
+
+const COLLAPSED_HEIGHT = 120;
+
+function CardItem({ card }: { card: Card }) {
+  const [expanded, setExpanded] = useState(false);
+  const [overflows, setOverflows] = useState(false);
+  const bodyRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!bodyRef.current) return;
+    // Check after a short delay to let dangerouslySetInnerHTML paint
+    const timer = setTimeout(() => {
+      if (bodyRef.current) {
+        setOverflows(bodyRef.current.scrollHeight > COLLAPSED_HEIGHT);
+      }
+    }, 50);
+    return () => clearTimeout(timer);
+  }, [card.content]);
+
+  return (
+    <div className={styles.card}>
+      <h2>{card.title}</h2>
+      <div
+        ref={bodyRef}
+        className={styles.cardBody}
+        style={{
+          maxHeight: expanded ? 'none' : `${COLLAPSED_HEIGHT}px`,
+          overflow: 'hidden',
+          position: 'relative',
+        }}
+        dangerouslySetInnerHTML={{ __html: card.content }}
+      />
+      {!expanded && overflows && (
+        <div className={styles.fadeOut} />
+      )}
+      {overflows && (
+        <button
+          className={styles.readMoreBtn}
+          onClick={() => setExpanded((v) => !v)}
+        >
+          {expanded ? '▲ Show Less' : '▼ Read More'}
+        </button>
+      )}
+    </div>
+  );
 }
 
 export default function NewPlayerPage() {
@@ -36,13 +82,7 @@ export default function NewPlayerPage() {
       ) : (
         <section className={styles.content}>
           {cards.map((card) => (
-            <div key={card.id} className={styles.card}>
-              <h2>{card.title}</h2>
-              <div
-                className={styles.cardBody}
-                dangerouslySetInnerHTML={{ __html: card.content }}
-              />
-            </div>
+            <CardItem key={card.id} card={card} />
           ))}
         </section>
       )}
