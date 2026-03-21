@@ -2,27 +2,40 @@ import { createClient } from '@supabase/supabase-js';
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
+// Public client — uses anon key, respects RLS
+// Safe to use in client components
 let supabaseClient: any = null;
-
-// Only create client if both URL and key are available
 if (supabaseUrl && supabaseAnonKey) {
   supabaseClient = createClient(supabaseUrl, supabaseAnonKey);
 } else {
-  // Dummy client that won't crash but will fail gracefully
   supabaseClient = {
     from: () => ({
       select: () => Promise.resolve({ data: null, error: { message: 'Supabase not configured' } }),
       insert: () => Promise.resolve({ data: null, error: { message: 'Supabase not configured' } }),
       update: () => Promise.resolve({ data: null, error: { message: 'Supabase not configured' } }),
       delete: () => Promise.resolve({ data: null, error: { message: 'Supabase not configured' } }),
-    })
+    }),
   };
 }
 
-// Export both - use same client for all operations
+// Admin client — uses service role key, bypasses RLS
+// Only ever used in API routes (server-side), never in client components
+let supabaseAdminClient: any = null;
+if (supabaseUrl && supabaseServiceKey) {
+  supabaseAdminClient = createClient(supabaseUrl, supabaseServiceKey, {
+    auth: { autoRefreshToken: false, persistSession: false },
+  });
+} else {
+  // Fall back to anon client if service key not set — writes will fail due to RLS
+  // but the app won't crash
+  console.warn('SUPABASE_SERVICE_ROLE_KEY not set — admin writes will fail');
+  supabaseAdminClient = supabaseClient;
+}
+
 export const supabase = supabaseClient;
-export const supabaseAdmin = supabaseClient;
+export const supabaseAdmin = supabaseAdminClient;
 
 // Types for database tables
 export interface Guide {
@@ -44,7 +57,7 @@ export interface Section {
   title: string;
   content: string;
   order: number;
-  data?: Record<string, any>; // For structured data like requirements
+  data?: Record<string, any>;
 }
 
 export interface Announcement {
@@ -61,7 +74,7 @@ export interface SiteUpdate {
   id: string;
   version: string;
   title: string;
-  changes: string[]; // Array of change descriptions
+  changes: string[];
   created_at: string;
 }
 
