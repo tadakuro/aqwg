@@ -97,10 +97,44 @@
 .content {
   color: #aaa;
   line-height: 1.8;
-  margin: 0;
-  white-space: pre-wrap;
-  word-break: break-word;
+  margin: 0 0 0.75rem 0;
+  max-height: 80px;
+  overflow: hidden;
+  position: relative;
+  transition: max-height 0.3s ease;
 }
+
+.content.expanded {
+  max-height: 2000px;
+}
+
+.content:not(.expanded)::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 40px;
+  background: linear-gradient(transparent, rgba(10, 14, 39, 0.95));
+  pointer-events: none;
+}
+
+.content ul, .content ol { padding-left: 1.5rem; }
+.content li { margin-bottom: 0.4rem; }
+.content strong { color: #e0e0e0; }
+.content a { color: #4db8ff; }
+.content p { margin-bottom: 0.5rem; }
+
+.readMoreBtn {
+  background: none;
+  border: none;
+  color: #4db8ff;
+  font-size: 0.85rem;
+  cursor: pointer;
+  padding: 0;
+  transition: color 0.2s;
+}
+.readMoreBtn:hover { color: #7ec8ff; }
 
 @media (max-width: 768px) {
   .announcementsPage {
