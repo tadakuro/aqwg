@@ -1,4 +1,4 @@
-Contact: security@yourdomain.com
+Contact: yukiakira_ (discord)
 Expires: 2026-12-20T00:00:00.000Z
 Preferred-Languages: en
 Canonical: https://aqwg.vercel.app/.well-known/security.txt
