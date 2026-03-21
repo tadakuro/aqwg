@@ -215,6 +215,21 @@ export default function AdminDashboard() {
             </div>
           </section>
 
+          <section className={styles.quickActions}>
+            <h2>Manage Resources</h2>
+            <div className={styles.actions}>
+              <Link href="/admin/resources/new-player" className={styles.actionBtn}>
+                New Player Guide
+              </Link>
+              <Link href="/admin/resources/farming" className={styles.actionBtn}>
+                Farming List
+              </Link>
+              <Link href="/admin/resources/acronyms" className={styles.actionBtn}>
+                Acronyms
+              </Link>
+            </div>
+          </section>
+
           <section className={styles.recentActivity}>
             <h2>Recent Activity</h2>
             <p style={{ color: '#888' }}>
