@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import RichEditor from '@/app/components/RichEditor';
 import { supabase } from '@/lib/supabase';
 import styles from '../admin.module.css';
 import pageStyles from './announcements.module.css';
@@ -20,7 +21,6 @@ export default function AdminAnnouncementsPage() {
   const [loading, setLoading] = useState(true);
   const [actionLoading, setActionLoading] = useState<string | null>(null);
 
-  // Inline create form state
   const [showForm, setShowForm] = useState(false);
   const [formTitle, setFormTitle] = useState('');
   const [formContent, setFormContent] = useState('');
@@ -28,9 +28,17 @@ export default function AdminAnnouncementsPage() {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
 
-  useEffect(() => {
-    loadAnnouncements();
-  }, []);
+  const [expandedCards, setExpandedCards] = useState<Set<string>>(new Set());
+
+  const toggleExpanded = (id: string) => {
+    setExpandedCards((prev) => {
+      const next = new Set(prev);
+      next.has(id) ? next.delete(id) : next.add(id);
+      return next;
+    });
+  };
+
+  useEffect(() => { loadAnnouncements(); }, []);
 
   const loadAnnouncements = async () => {
     setLoading(true);
@@ -115,11 +123,7 @@ export default function AdminAnnouncementsPage() {
           {error && <p className={pageStyles.error}>{error}</p>}
           <div className={pageStyles.field}>
             <label>Title *</label>
-            <input
-              value={formTitle}
-              onChange={(e) => setFormTitle(e.target.value)}
-              placeholder="e.g., New Event: Frostveil Festival"
-            />
+            <input value={formTitle} onChange={(e) => setFormTitle(e.target.value)} placeholder="e.g., New Event: Frostveil Festival" />
           </div>
           <div className={pageStyles.field}>
             <label>Type *</label>
@@ -131,11 +135,11 @@ export default function AdminAnnouncementsPage() {
           </div>
           <div className={pageStyles.field}>
             <label>Content *</label>
-            <textarea
+            <RichEditor
               value={formContent}
-              onChange={(e) => setFormContent(e.target.value)}
-              rows={5}
+              onChange={setFormContent}
               placeholder="Announcement details..."
+              minHeight={180}
             />
           </div>
           <div className={pageStyles.formActions}>
@@ -152,9 +156,7 @@ export default function AdminAnnouncementsPage() {
       {loading ? (
         <div className={styles.loading}>Loading announcements...</div>
       ) : announcements.length === 0 ? (
-        <div className={pageStyles.empty}>
-          <p>No announcements yet. Create one above!</p>
-        </div>
+        <div className={pageStyles.empty}><p>No announcements yet. Create one above!</p></div>
       ) : (
         <div className={pageStyles.list}>
           {announcements.map((ann) => (
@@ -167,20 +169,21 @@ export default function AdminAnnouncementsPage() {
                 <span className={pageStyles.date}>{formatDate(ann.created_at)}</span>
               </div>
               <h3 className={pageStyles.cardTitle}>{ann.title}</h3>
-              <p className={pageStyles.cardContent}>{ann.content}</p>
+              <div
+                className={`${pageStyles.cardContent} ${expandedCards.has(ann.id) ? pageStyles.expanded : ''}`}
+                dangerouslySetInnerHTML={{ __html: ann.content }}
+              />
+              <button
+                className={pageStyles.readMoreBtn}
+                onClick={() => toggleExpanded(ann.id)}
+              >
+                {expandedCards.has(ann.id) ? '▲ Show Less' : '▼ Read More'}
+              </button>
               <div className={pageStyles.cardActions}>
-                <button
-                  onClick={() => togglePublished(ann)}
-                  disabled={actionLoading === ann.id}
-                  className={pageStyles.toggleBtn}
-                >
+                <button onClick={() => togglePublished(ann)} disabled={actionLoading === ann.id} className={pageStyles.toggleBtn}>
                   {ann.published ? '🙈 Unpublish' : '✅ Publish'}
                 </button>
-                <button
-                  onClick={() => deleteAnnouncement(ann.id, ann.title)}
-                  disabled={actionLoading === ann.id}
-                  className={pageStyles.deleteBtn}
-                >
+                <button onClick={() => deleteAnnouncement(ann.id, ann.title)} disabled={actionLoading === ann.id} className={pageStyles.deleteBtn}>
                   🗑 Delete
                 </button>
               </div>
