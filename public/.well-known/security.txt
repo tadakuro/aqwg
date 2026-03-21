@@ -9,7 +9,7 @@ This is a community-run guide website for AdventureQuest Worlds players.
 
 ## Reporting Security Issues
 
-If you discover a security vulnerability, please email security@yourdomain.com 
+If you discover a security vulnerability, please contact me on discord 
 instead of using the public issue tracker.
 
 Include:
