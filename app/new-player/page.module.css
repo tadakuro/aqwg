@@ -111,20 +111,11 @@
 
 .cardBody {
   position: relative;
-  transition: max-height 0.3s ease;
-  overflow: hidden;
 }
 
-.cardBodyCollapsed {
-  max-height: 120px;
-}
-
-.cardBodyCollapsed::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
+.fadeOut {
+  position: relative;
+  margin-top: -48px;
   height: 48px;
   background: linear-gradient(transparent, rgba(10, 14, 39, 0.95));
   pointer-events: none;
@@ -138,7 +129,7 @@
   font-weight: 600;
   cursor: pointer;
   padding: 0.4rem 0;
-  margin-top: 0.5rem;
+  margin-top: 0.25rem;
   display: block;
   transition: color 0.2s;
 }
