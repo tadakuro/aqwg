@@ -14,30 +14,26 @@ interface Announcement {
 export default function AnnouncementsPage() {
   const [announcements, setAnnouncements] = useState<Announcement[]>([]);
   const [loading, setLoading] = useState(true);
+  const [expanded, setExpanded] = useState<Set<string>>(new Set());
 
   useEffect(() => {
-    loadAnnouncements();
+    fetch('/api/announcements')
+      .then((r) => r.json())
+      .then((d) => setAnnouncements(d.data || []))
+      .catch(console.error)
+      .finally(() => setLoading(false));
   }, []);
 
-  const loadAnnouncements = async () => {
-    try {
-      const response = await fetch('/api/announcements');
-      const data = await response.json();
-      setAnnouncements(data.data || []);
-    } catch (error) {
-      console.error('Failed to load announcements:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
+  const toggleExpanded = (id: string) => {
+    setExpanded((prev) => {
+      const next = new Set(prev);
+      next.has(id) ? next.delete(id) : next.add(id);
+      return next;
     });
   };
+
+  const formatDate = (d: string) =>
+    new Date(d).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 
   return (
     <div className={styles.announcementsPage}>
@@ -54,18 +50,27 @@ export default function AnnouncementsPage() {
         </div>
       ) : (
         <div className={styles.list}>
-          {announcements.map((announcement) => (
-            <article key={announcement.id} className={styles.announcement}>
-              <div className={styles.meta}>
-                <span className={`${styles.type} ${styles[announcement.type]}`}>
-                  {announcement.type.replace('_', ' ').toUpperCase()}
-                </span>
-                <span className={styles.date}>{formatDate(announcement.created_at)}</span>
-              </div>
-              <h2>{announcement.title}</h2>
-              <p className={styles.content}>{announcement.content}</p>
-            </article>
-          ))}
+          {announcements.map((ann) => {
+            const isExpanded = expanded.has(ann.id);
+            return (
+              <article key={ann.id} className={styles.announcement}>
+                <div className={styles.meta}>
+                  <span className={`${styles.type} ${styles[ann.type]}`}>
+                    {ann.type.replace('_', ' ').toUpperCase()}
+                  </span>
+                  <span className={styles.date}>{formatDate(ann.created_at)}</span>
+                </div>
+                <h2>{ann.title}</h2>
+                <div
+                  className={`${styles.content} ${isExpanded ? styles.expanded : ''}`}
+                  dangerouslySetInnerHTML={{ __html: ann.content }}
+                />
+                <button className={styles.readMoreBtn} onClick={() => toggleExpanded(ann.id)}>
+                  {isExpanded ? '▲ Show Less' : '▼ Read More'}
+                </button>
+              </article>
+            );
+          })}
         </div>
       )}
     </div>
